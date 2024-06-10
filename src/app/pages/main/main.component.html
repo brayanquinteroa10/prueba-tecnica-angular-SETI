@@ -1,0 +1,30 @@
+<div class="main-content">
+    <h1>Detector de mutantes</h1>
+    <mat-form-field class="mat-form-field">
+        <mat-label>Digita la secuencia de tu ADN</mat-label>
+        <input matInput type="text" [formControl]="formControl" appDnaInputRestriction maxlength="36">
+        @if (formControl.value) {
+          <button matSuffix mat-icon-button aria-label="Clear" (click)="formControl.setValue('')">
+            <mat-icon>close</mat-icon>
+          </button>
+        }
+        <mat-hint align="end">{{ formControl.value?.length || 0 }} de 36 caracteres</mat-hint>
+      </mat-form-field>
+      <mat-card *ngIf="dnaSequenceArray.length > 0">
+        <mat-card-header>
+            <mat-card-title>Su secuencia de ADN es: </mat-card-title>
+        </mat-card-header>
+        <mat-card class="sequence">
+            <mat-card-content>
+                <ng-container *ngIf="formControl.value">
+                    {{ splitIntoGroups(formControl.value).join(' - ') }}
+                </ng-container>
+            </mat-card-content>
+        </mat-card>
+        <mat-grid-list cols="6" rowHeight="40px">
+            <mat-grid-tile *ngFor="let letter of dnaSequenceArray">
+                {{ letter }}
+            </mat-grid-tile>
+        </mat-grid-list>
+      </mat-card>
+</div> 
